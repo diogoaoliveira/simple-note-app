@@ -20,6 +20,6 @@ const store = createStore(
     )
 );
 
-saga.run(rootSaga);
+// saga.run(rootSaga);
 
 export default store;
