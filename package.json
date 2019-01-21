@@ -55,12 +55,13 @@
         "jest": "^23.6.0",
         "jest-dom": "^3.0.0",
         "prettier": "^1.15.3",
+        "prop-types": "^15.6.2",
         "react-testing-library": "^5.4.4",
         "url-loader": "^1.1.2",
         "webpack": "^4.28.4",
         "webpack-cli": "^3.2.1",
-        "webpack-jarvis": "^0.3.2",
         "webpack-dev-server": "^3.1.14",
+        "webpack-jarvis": "^0.3.2",
         "webpack-merge": "^4.2.1"
     },
     "dependencies": {
