@@ -1,7 +1,8 @@
 {
     "name": "simple-note-app",
     "version": "1.0.0",
-    "description": "Add and remove notes",
+    "description": "Add and remove Notes easily",
+    "main": "src/index.js",
     "scripts": {
         "start": "cross-env NODE_ENV=development webpack-dev-server --open",
         "start:dev": "cross-env NODE_ENV=development webpack-dev-server --open",
@@ -14,7 +15,11 @@
     },
     "keywords": [],
     "author": "Diogo Oliveira",
-    "license": "ISC",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/diogoaoliveira/simple-note-app.git"
+    },
     "devDependencies": {
         "@babel/cli": "^7.2.3",
         "@babel/core": "^7.2.2",
@@ -55,6 +60,7 @@
         "url-loader": "^1.1.2",
         "webpack": "^4.28.4",
         "webpack-cli": "^3.2.1",
+        "webpack-jarvis": "^0.3.2",
         "webpack-dev-server": "^3.1.14",
         "webpack-merge": "^4.2.1"
     },
