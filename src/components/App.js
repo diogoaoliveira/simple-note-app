@@ -1,12 +1,16 @@
 import React from 'react';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import posed from 'react-pose';
+
+import NoteDialog from './NoteDialog';
 import NoteList from './NoteList';
 
 const defaultTheme = {
     backgroundColor: '#00b894',
     listItemColor: '#dfe6e9',
+    modalContainerColor: '#b2bec3',
     buttonColor: '#00cec9',
+    confirmButtonColor: '#0984e3',
     blackColor: '#2d3436',
     maxWidth: '1000px'
 };
@@ -69,6 +73,7 @@ const App = () => (
             <Container>
                 <NoteList />
             </Container>
+            <NoteDialog />
             <AddNote onClick={() => console.log('clicked')}>+</AddNote>
         </>
     </ThemeProvider>
