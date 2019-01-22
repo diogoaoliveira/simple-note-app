@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import posed from 'react-pose';
 import NoteList from './NoteList';
 
 const defaultTheme = {
@@ -36,6 +37,30 @@ const Container = styled.div`
     margin: 0 auto;
 `;
 
+const Button = posed.div({
+    pressable: true,
+    init: { scale: 1 },
+    press: { scale: 0.8 }
+});
+
+const AddNote = styled(Button)`
+    position: fixed;
+    height: 4rem;
+    width: 4rem;
+    background-color: ${props => props.theme.buttonColor};
+    bottom: 0;
+    right: 0;
+    margin: 2rem;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    border-radius: 2rem;
+    user-select: none;
+    cursor: pointer;
+`;
+
 const App = () => (
     <ThemeProvider theme={defaultTheme}>
         <>
@@ -44,6 +69,7 @@ const App = () => (
             <Container>
                 <NoteList />
             </Container>
+            <AddNote onClick={() => console.log('clicked')}>+</AddNote>
         </>
     </ThemeProvider>
 );

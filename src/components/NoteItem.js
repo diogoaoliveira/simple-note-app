@@ -1,8 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import posed from 'react-pose';
 import styled from 'styled-components';
 
-const ListItem = styled.li`
+const ListItem = posed.li({
+    open: { y: 0, opacity: 1 },
+    closed: { y: 20, opacity: 0 }
+});
+
+const StyledListItem = styled(ListItem)`
     background-color: ${props => props.theme.listItemColor};
     padding: 1rem;
     margin: 1rem;
@@ -11,7 +17,7 @@ const ListItem = styled.li`
 
 const NoteItem = ({ note }) => {
     const { title } = note;
-    return <ListItem>{title}</ListItem>;
+    return <StyledListItem>{title}</StyledListItem>;
 };
 
 NoteItem.defaultProps = {
