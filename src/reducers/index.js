@@ -1,7 +1,10 @@
 import { combineReducers } from 'redux';
+import notesReducer from './notes';
+import dialogReducer from './dialog';
 
 const rootReducer = combineReducers({
-    state: () => ({})
+    notes: notesReducer,
+    dialog: dialogReducer
 });
 
 export default rootReducer;

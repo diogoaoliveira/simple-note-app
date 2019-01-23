@@ -1,6 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
+
+import { addNote } from '../actions/notes';
 
 const Dialog = posed.div({
     enter: {
@@ -25,9 +29,8 @@ const DialogContainer = styled(Dialog)`
     border-radius: 0.5rem;
     height: 28rem;
     width: 27rem;
-    bottom: 2rem;
-    right: -4rem;
-    margin: 7rem;
+    bottom: 8rem;
+    right: 2rem;
 
     &:after {
         content: '';
@@ -49,11 +52,11 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     margin: 2rem;
-    height: 40vh;
+    height: 24rem;
     justify-content: space-between;
 `;
 
-const FormContainer = styled.div`
+const FormContainer = styled.form`
     display: flex;
 `;
 
@@ -82,39 +85,46 @@ const AddButton = styled.button`
     background-color: ${props => props.theme.confirmButtonColor};
 `;
 
-class NoteDialog extends React.Component {
-    state = {
-        showDialog: false
+const NoteDialog = ({ showDialog, addNote }) => {
+    const submitForm = e => {
+        e.preventDefault();
+        addNote({ title: e.target.note.value, id: e.target.note.value });
     };
 
-    componentDidMount() {
-        setTimeout(this.showDialog, 300);
-    }
+    return (
+        <PoseGroup>
+            {showDialog && [
+                <DialogContainer key="dialog">
+                    <Container>
+                        <ListContainer>Test</ListContainer>
+                        <FormContainer onSubmit={submitForm}>
+                            <InputField
+                                name="note"
+                                type="text"
+                                placeholder="e.g. Remember to like the repo!"
+                            />
+                            <AddButton type="submit">Add</AddButton>
+                        </FormContainer>
+                    </Container>
+                </DialogContainer>
+            ]}
+        </PoseGroup>
+    );
+};
 
-    showDialog = () =>
-        this.setState(prevState => ({ showDialog: !prevState.showDialog }));
+NoteDialog.propTypes = {
+    showDialog: PropTypes.bool.isRequired
+};
 
-    render() {
-        const { showDialog } = this.state;
-        return (
-            <PoseGroup>
-                {showDialog && [
-                    <DialogContainer key="dialog">
-                        <Container>
-                            <ListContainer>Test</ListContainer>
-                            <FormContainer>
-                                <InputField
-                                    type="text"
-                                    placeholder="e.g. Remember to like the repo!"
-                                />
-                                <AddButton type="button">Add</AddButton>
-                            </FormContainer>
-                        </Container>
-                    </DialogContainer>
-                ]}
-            </PoseGroup>
-        );
-    }
-}
+const mapStateToProps = state => ({
+    showDialog: state.dialog.showDialog
+});
 
-export default NoteDialog;
+const mapDispatchToProps = dispatch => ({
+    addNote: newNote => dispatch(addNote(newNote))
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(NoteDialog);

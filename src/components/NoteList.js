@@ -1,6 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import posed from 'react-pose';
+import { getAllNotes } from '../selectors/notes';
+
 import NoteItem from './NoteItem';
 
 const ListContainer = posed.ul({
@@ -19,8 +23,6 @@ const StyledListContainer = styled(ListContainer)`
     min-width: 20rem;
 `;
 
-const notes = [{ title: 'Note 1', id: 1 }, { title: 'Note 2', id: 2 }];
-
 class NoteList extends React.PureComponent {
     state = { show: false };
 
@@ -32,6 +34,7 @@ class NoteList extends React.PureComponent {
 
     render() {
         const { show } = this.state;
+        const { notes } = this.props;
         return (
             <StyledListContainer pose={show ? 'open' : 'closed'}>
                 {notes.map(note => (
@@ -42,4 +45,23 @@ class NoteList extends React.PureComponent {
     }
 }
 
-export default NoteList;
+NoteList.defaultProps = {
+    notes: []
+};
+
+NoteList.propTypes = {
+    notes: PropTypes.arrayOf(
+        PropTypes.shape({
+            title: PropTypes.string
+        })
+    )
+};
+
+const mapStateToProps = state => ({
+    notes: getAllNotes(state)
+});
+
+export default connect(
+    mapStateToProps,
+    null
+)(NoteList);
