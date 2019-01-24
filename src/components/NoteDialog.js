@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
 
+import { getAllNotes } from '../selectors/notes';
 import { addNote } from '../actions/notes';
+import NoteList from './NoteList';
 
 const Dialog = posed.div({
     enter: {
@@ -60,9 +62,11 @@ const FormContainer = styled.form`
 `;
 
 const ListContainer = styled.div`
-    background-color: ${props => props.theme.modalContainerColor};
-    padding: 1rem;
+    /* background-color: ${props => props.theme.listItemColor}; */
+    padding: 0 1rem 0 0;
     border-radius: 0.5rem;
+    height: 20rem;
+    overflow-y: scroll;
 `;
 
 const InputField = styled.input`
@@ -84,7 +88,7 @@ const AddButton = styled.button`
     background-color: ${props => props.theme.confirmButtonColor};
 `;
 
-const NoteDialog = ({ showDialog, addNote }) => {
+const NoteDialog = ({ showDialog, notes, addNote }) => {
     const submitForm = e => {
         e.preventDefault();
         addNote({ title: e.target.note.value, id: e.target.note.value });
@@ -95,7 +99,9 @@ const NoteDialog = ({ showDialog, addNote }) => {
             {showDialog && [
                 <DialogContainer key="dialog">
                     <Container>
-                        <ListContainer>Test</ListContainer>
+                        <ListContainer>
+                            <NoteList notes={notes} />
+                        </ListContainer>
                         <FormContainer onSubmit={submitForm}>
                             <InputField
                                 name="note"
@@ -116,6 +122,7 @@ NoteDialog.propTypes = {
 };
 
 const mapStateToProps = state => ({
+    notes: getAllNotes(state),
     showDialog: state.dialog.showDialog
 });
 
