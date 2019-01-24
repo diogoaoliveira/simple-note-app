@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
-import posed from 'react-pose';
 
 import { toggleDialog } from '../actions/dialog';
+import { checkNotesAvailable } from '../selectors/notes';
 
-import { Button } from './AnimatedComponents';
+import { Container, Button } from './AnimatedComponents';
 import NoteDialog from './NoteDialog';
 import NoteList from './NoteList';
+import NoItemsMessage from './NoItemsMessage';
 
 const defaultTheme = {
     backgroundColor: '#00b894',
@@ -18,11 +19,6 @@ const defaultTheme = {
     blackColor: '#2d3436',
     maxWidth: '1000px'
 };
-
-const Container = posed.div({
-    open: { opacity: 1 },
-    close: { opacity: 0 }
-});
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -77,7 +73,7 @@ class Layout extends React.Component {
         this.setState(prevState => ({ show: !prevState.show }));
 
     render() {
-        const { toggleDialog, showDialog } = this.props;
+        const { toggleDialog, showDialog, notesRemaining } = this.props;
         const { show } = this.state;
         return (
             <ThemeProvider theme={defaultTheme}>
@@ -85,7 +81,7 @@ class Layout extends React.Component {
                     <GlobalStyle />
                     <Title>Simple Notes</Title>
                     <StyledContainer pose={show ? 'open' : 'closed'}>
-                        <NoteList />
+                        {notesRemaining ? <NoteList /> : <NoItemsMessage />}
                     </StyledContainer>
                     <NoteDialog />
                     <AddNote onClick={toggleDialog}>
@@ -98,7 +94,8 @@ class Layout extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    showDialog: state.dialog.showDialog
+    showDialog: state.dialog.showDialog,
+    notesRemaining: checkNotesAvailable(state)
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
 
-import { getAllNotes } from '../selectors/notes';
+import { getAllNotes, checkNotesAvailable } from '../selectors/notes';
 import { addNote } from '../actions/notes';
+
 import NoteList from './NoteList';
 import { Button } from './AnimatedComponents';
+import NoItemsMessage from './NoItemsMessage';
 
 const Dialog = posed.div({
     enter: {
@@ -90,7 +92,7 @@ const AddButton = styled(Button)`
     cursor: pointer;
 `;
 
-const NoteDialog = ({ showDialog, notes, addNote }) => {
+const NoteDialog = ({ showDialog, notes, addNote, notesRemaining }) => {
     const submitForm = e => {
         e.preventDefault();
         addNote({ title: e.target.note.value, id: e.target.note.value });
@@ -102,7 +104,11 @@ const NoteDialog = ({ showDialog, notes, addNote }) => {
                 <DialogContainer key="dialog">
                     <Container>
                         <ListContainer>
-                            <NoteList notes={notes} />
+                            {notesRemaining ? (
+                                <NoteList notes={notes} />
+                            ) : (
+                                <NoItemsMessage />
+                            )}
                         </ListContainer>
                         <FormContainer onSubmit={submitForm} autoComplete="off">
                             <InputField
@@ -125,6 +131,7 @@ NoteDialog.propTypes = {
 
 const mapStateToProps = state => ({
     notes: getAllNotes(state),
+    notesRemaining: checkNotesAvailable(state),
     showDialog: state.dialog.showDialog
 });
 
