@@ -1,8 +1,13 @@
-import { ADD_NOTE } from '../constants/actionTypes';
+import { ADD_NOTE, DELETE_NOTE } from '../constants/actionTypes';
 
 const addNote = newNote => ({
     type: ADD_NOTE,
     note: newNote
 });
 
-export { addNote };
+const deleteNote = noteIndex => ({
+    type: DELETE_NOTE,
+    noteIndex
+});
+
+export { addNote, deleteNote };

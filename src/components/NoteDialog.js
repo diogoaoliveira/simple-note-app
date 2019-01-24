@@ -7,6 +7,7 @@ import posed, { PoseGroup } from 'react-pose';
 import { getAllNotes } from '../selectors/notes';
 import { addNote } from '../actions/notes';
 import NoteList from './NoteList';
+import { Button } from './AnimatedComponents';
 
 const Dialog = posed.div({
     enter: {
@@ -62,7 +63,6 @@ const FormContainer = styled.form`
 `;
 
 const ListContainer = styled.div`
-    /* background-color: ${props => props.theme.listItemColor}; */
     padding: 0 1rem 0 0;
     border-radius: 0.5rem;
     height: 20rem;
@@ -79,13 +79,15 @@ const InputField = styled.input`
     outline: none;
 `;
 
-const AddButton = styled.button`
+const AddButton = styled(Button)`
     margin: 0 10px;
     border: none;
     width: 3.7rem;
     border-radius: 2rem;
     color: white;
     background-color: ${props => props.theme.confirmButtonColor};
+    outline: none;
+    cursor: pointer;
 `;
 
 const NoteDialog = ({ showDialog, notes, addNote }) => {
@@ -102,7 +104,7 @@ const NoteDialog = ({ showDialog, notes, addNote }) => {
                         <ListContainer>
                             <NoteList notes={notes} />
                         </ListContainer>
-                        <FormContainer onSubmit={submitForm}>
+                        <FormContainer onSubmit={submitForm} autoComplete="off">
                             <InputField
                                 name="note"
                                 type="text"

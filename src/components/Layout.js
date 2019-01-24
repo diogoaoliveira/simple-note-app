@@ -5,6 +5,7 @@ import posed from 'react-pose';
 
 import { toggleDialog } from '../actions/dialog';
 
+import { Button } from './AnimatedComponents';
 import NoteDialog from './NoteDialog';
 import NoteList from './NoteList';
 
@@ -13,6 +14,7 @@ const defaultTheme = {
     listItemColor: '#dfe6e9',
     buttonColor: '#00cec9',
     confirmButtonColor: '#0984e3',
+    deleteButtonColor: '#e17055',
     blackColor: '#2d3436',
     maxWidth: '1000px'
 };
@@ -48,12 +50,6 @@ const StyledContainer = styled(Container)`
     margin: 0 auto;
 `;
 
-const Button = posed.div({
-    pressable: true,
-    init: { scale: 1 },
-    press: { scale: 0.8 }
-});
-
 const AddNote = styled(Button)`
     position: fixed;
     height: 4rem;
@@ -63,13 +59,11 @@ const AddNote = styled(Button)`
     right: 0;
     margin: 2rem;
     color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-size: 2rem;
     border-radius: 2rem;
-    user-select: none;
     cursor: pointer;
+    border: none;
+    outline: none;
 `;
 
 class Layout extends React.Component {

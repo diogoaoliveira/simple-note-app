@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
+
 import { getAllNotes } from '../selectors/notes';
+import { deleteNote } from '../actions/notes';
 
 import NoteItem from './NoteItem';
 
@@ -24,11 +26,15 @@ const StyledListContainer = styled(ListContainer)`
     min-width: 20rem;
 `;
 
-const NoteList = ({ notes }) => (
+const NoteList = ({ notes, deleteNote }) => (
     <PoseGroup>
         <StyledListContainer key="notes-list">
-            {notes.map(note => (
-                <NoteItem key={note.id} note={note} />
+            {notes.map((note, index) => (
+                <NoteItem
+                    deleteNote={() => deleteNote(index)}
+                    key={note.id}
+                    note={note}
+                />
             ))}
         </StyledListContainer>
     </PoseGroup>
@@ -50,7 +56,11 @@ const mapStateToProps = state => ({
     notes: getAllNotes(state)
 });
 
+const mapDispatchToProps = dispatch => ({
+    deleteNote: noteIndex => dispatch(deleteNote(noteIndex))
+});
+
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(NoteList);
