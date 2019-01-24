@@ -84,7 +84,7 @@ class Layout extends React.Component {
         this.setState(prevState => ({ show: !prevState.show }));
 
     render() {
-        const { toggleDialog } = this.props;
+        const { toggleDialog, showDialog } = this.props;
         const { show } = this.state;
         return (
             <ThemeProvider theme={defaultTheme}>
@@ -95,18 +95,24 @@ class Layout extends React.Component {
                         <NoteList />
                     </StyledContainer>
                     <NoteDialog />
-                    <AddNote onClick={toggleDialog}>+</AddNote>
+                    <AddNote onClick={toggleDialog}>
+                        {showDialog ? '-' : '+'}
+                    </AddNote>
                 </>
             </ThemeProvider>
         );
     }
 }
 
+const mapStateToProps = state => ({
+    showDialog: state.dialog.showDialog
+});
+
 const mapDispatchToProps = dispatch => ({
     toggleDialog: () => dispatch(toggleDialog())
 });
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(Layout);
