@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import posed from 'react-pose';
+import posed, { PoseGroup } from 'react-pose';
 import { getAllNotes } from '../selectors/notes';
 
 import NoteItem from './NoteItem';
@@ -10,10 +10,11 @@ import NoteItem from './NoteItem';
 const ListContainer = posed.ul({
     open: {
         x: '0%',
+        beforeChildren: true,
         delayChildren: 200,
         staggerChildren: 50
     },
-    closed: { x: '-100%', delay: 300 }
+    closed: { x: '-100%', delay: 300, afterChildren: true }
 });
 
 const StyledListContainer = styled(ListContainer)`
@@ -23,27 +24,15 @@ const StyledListContainer = styled(ListContainer)`
     min-width: 20rem;
 `;
 
-class NoteList extends React.PureComponent {
-    state = { show: false };
-
-    componentDidMount() {
-        setTimeout(this.showList, 300);
-    }
-
-    showList = () => this.setState(prevState => ({ show: !prevState.show }));
-
-    render() {
-        const { show } = this.state;
-        const { notes } = this.props;
-        return (
-            <StyledListContainer pose={show ? 'open' : 'closed'}>
-                {notes.map(note => (
-                    <NoteItem key={note.id} note={note} />
-                ))}
-            </StyledListContainer>
-        );
-    }
-}
+const NoteList = ({ notes }) => (
+    <PoseGroup>
+        <StyledListContainer key="notes-list">
+            {notes.map(note => (
+                <NoteItem key={note.id} note={note} />
+            ))}
+        </StyledListContainer>
+    </PoseGroup>
+);
 
 NoteList.defaultProps = {
     notes: []

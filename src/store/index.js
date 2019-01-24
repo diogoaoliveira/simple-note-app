@@ -8,15 +8,15 @@ import rootReducer from '../reducers';
 
 const middleware = applyMiddleware(logger);
 
-const reduxDevTools =
-    window.__REDUX_DEVTOOLS_EXTENSION__ &&
-    window.__REDUX_DEVTOOLS_EXTENSION__();
+// const reduxDevTools =
+//     window.__REDUX_DEVTOOLS_EXTENSION__ &&
+//     window.__REDUX_DEVTOOLS_EXTENSION__();
 
 const store = createStore(
     rootReducer,
     compose(
-        middleware,
-        process.env.NODE_ENV !== 'production' && reduxDevTools
+        middleware
+        // reduxDevTools
     )
 );
 

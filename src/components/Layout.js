@@ -18,6 +18,11 @@ const defaultTheme = {
     maxWidth: '1000px'
 };
 
+const Container = posed.div({
+    open: { opacity: 1 },
+    close: { opacity: 0 }
+});
+
 const GlobalStyle = createGlobalStyle`
   body {
     color: ${props => props.theme.blackColor};
@@ -36,7 +41,7 @@ const Title = styled.h1`
     color: white;
 `;
 
-const Container = styled.div`
+const StyledContainer = styled(Container)`
     max-width: ${props => props.theme.maxWidth};
     display: flex;
     justify-content: center;
@@ -68,21 +73,34 @@ const AddNote = styled(Button)`
     cursor: pointer;
 `;
 
-const Layout = ({ toggleDialog }) => {
-    return (
-        <ThemeProvider theme={defaultTheme}>
-            <>
-                <GlobalStyle />
-                <Title>Simple Notes</Title>
-                <Container>
-                    <NoteList />
-                </Container>
-                <NoteDialog />
-                <AddNote onClick={toggleDialog}>+</AddNote>
-            </>
-        </ThemeProvider>
-    );
-};
+class Layout extends React.Component {
+    state = { show: false };
+
+    componentDidMount() {
+        setTimeout(this.showContainer, 300);
+    }
+
+    showContainer = () =>
+        this.setState(prevState => ({ show: !prevState.show }));
+
+    render() {
+        const { toggleDialog } = this.props;
+        const { show } = this.state;
+        return (
+            <ThemeProvider theme={defaultTheme}>
+                <>
+                    <GlobalStyle />
+                    <Title>Simple Notes</Title>
+                    <StyledContainer pose={show ? 'open' : 'closed'}>
+                        <NoteList />
+                    </StyledContainer>
+                    <NoteDialog />
+                    <AddNote onClick={toggleDialog}>+</AddNote>
+                </>
+            </ThemeProvider>
+        );
+    }
+}
 
 const mapDispatchToProps = dispatch => ({
     toggleDialog: () => dispatch(toggleDialog())
