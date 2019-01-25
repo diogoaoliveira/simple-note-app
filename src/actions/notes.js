@@ -1,8 +1,13 @@
-import { ADD_NOTE, DELETE_NOTE } from '../constants/actionTypes';
+import {
+    ADD_NOTE,
+    ADD_NOTE_START,
+    DELETE_NOTE
+} from '../constants/actionTypes';
 
-const addNote = newNote => ({
+const addNote = (newNote, page) => ({
     type: ADD_NOTE,
-    note: newNote
+    note: newNote,
+    page
 });
 
 const deleteNote = noteIndex => ({
@@ -10,4 +15,9 @@ const deleteNote = noteIndex => ({
     noteIndex
 });
 
-export { addNote, deleteNote };
+const addNoteWithTimeout = newNote => ({
+    type: ADD_NOTE_START,
+    note: newNote
+});
+
+export { addNote, addNoteWithTimeout, deleteNote };

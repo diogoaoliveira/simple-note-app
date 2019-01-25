@@ -1,9 +1,22 @@
-function getAllNotes(state) {
-    return state.notes;
+function getAllNotesMainPage(state) {
+    return state.notes.MAIN;
 }
 
-function checkNotesAvailable(state) {
-    return state.notes.length > 0;
+function getAllNotesDialog(state) {
+    return state.notes.DIALOG;
 }
 
-export { getAllNotes, checkNotesAvailable };
+function checkNotesMainPageAvailable(state) {
+    return state.notes.MAIN.length > 0;
+}
+
+function checkNotesDialogAvailable(state) {
+    return state.notes.DIALOG.length > 0;
+}
+
+export {
+    getAllNotesDialog,
+    getAllNotesMainPage,
+    checkNotesMainPageAvailable,
+    checkNotesDialogAvailable
+};

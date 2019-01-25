@@ -4,8 +4,11 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
 
-import { getAllNotes, checkNotesAvailable } from '../selectors/notes';
-import { addNote } from '../actions/notes';
+import {
+    getAllNotesDialog,
+    checkNotesDialogAvailable
+} from '../selectors/notes';
+import { addNoteWithTimeout } from '../actions/notes';
 
 import NoteList from './NoteList';
 import { Button } from './AnimatedComponents';
@@ -130,13 +133,13 @@ NoteDialog.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    notes: getAllNotes(state),
-    notesRemaining: checkNotesAvailable(state),
+    notes: getAllNotesDialog(state),
+    notesRemaining: checkNotesDialogAvailable(state),
     showDialog: state.dialog.showDialog
 });
 
 const mapDispatchToProps = dispatch => ({
-    addNote: newNote => dispatch(addNote(newNote))
+    addNote: newNote => dispatch(addNoteWithTimeout(newNote))
 });
 
 export default connect(

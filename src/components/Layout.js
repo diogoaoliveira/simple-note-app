@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 
 import { toggleDialog } from '../actions/dialog';
-import { checkNotesAvailable } from '../selectors/notes';
+import {
+    checkNotesMainPageAvailable,
+    getAllNotesMainPage
+} from '../selectors/notes';
 
 import { Container, Button } from './AnimatedComponents';
 import NoteDialog from './NoteDialog';
@@ -73,7 +76,7 @@ class Layout extends React.Component {
         this.setState(prevState => ({ show: !prevState.show }));
 
     render() {
-        const { toggleDialog, showDialog, notesRemaining } = this.props;
+        const { toggleDialog, showDialog, notesRemaining, notes } = this.props;
         const { show } = this.state;
         return (
             <ThemeProvider theme={defaultTheme}>
@@ -81,7 +84,11 @@ class Layout extends React.Component {
                     <GlobalStyle />
                     <Title>Simple Notes</Title>
                     <StyledContainer pose={show ? 'open' : 'closed'}>
-                        {notesRemaining ? <NoteList /> : <NoItemsMessage />}
+                        {notesRemaining ? (
+                            <NoteList notes={notes} />
+                        ) : (
+                            <NoItemsMessage />
+                        )}
                     </StyledContainer>
                     <NoteDialog />
                     <AddNote onClick={toggleDialog}>
@@ -95,7 +102,8 @@ class Layout extends React.Component {
 
 const mapStateToProps = state => ({
     showDialog: state.dialog.showDialog,
-    notesRemaining: checkNotesAvailable(state)
+    notes: getAllNotesMainPage(state),
+    notesRemaining: checkNotesMainPageAvailable(state)
 });
 
 const mapDispatchToProps = dispatch => ({
