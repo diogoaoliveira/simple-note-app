@@ -46,6 +46,8 @@ It will generate a /build folder for use.
 -   [Redux-Saga](https://redux-saga.js.org/) - Library that aims to make application side effects easier to manage
 -   [Styled-components](https://www.styled-components.com/) - Used for Styling
 -   [React-Pose](https://popmotion.io/pose/) - Animation library for React
+-   [React-testing-library](https://github.com/kentcdodds/react-testing-library) - Simple and complete React DOM testing utilities
+-   [Jest](https://jestjs.io/) - JavaScript Testing Framework
 -   [Webpack](https://webpack.js.org/) - Static module bundler for modern JavaScript applications
 
 ## Author
