@@ -1,6 +1,6 @@
 import { ADD_NOTE, DELETE_NOTE } from '../constants/actionTypes';
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
     MAIN: [{ title: 'Note 1', id: 1 }, { title: 'Note 2', id: 2 }],
     DIALOG: [{ title: 'Note 1', id: 1 }, { title: 'Note 2', id: 2 }]
 };

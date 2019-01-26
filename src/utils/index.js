@@ -1,21 +1,12 @@
-const isEmoji = str => {
-    const ranges = [
-        '\ud83c[\udf00-\udfff]', // U+1F300 to U+1F3FF
-        '\ud83d[\udc00-\ude4f]', // U+1F400 to U+1F64F
-        '\ud83d[\ude80-\udeff]' // U+1F680 to U+1F6FF
-    ];
-    if (str.match(ranges.join('|'))) {
-        return true;
-    }
-    return false;
-};
+import emojiRegex from 'emoji-regex';
 
 const validateInput = input => {
+    const regex = emojiRegex();
     const errors = [];
     if (input === '') {
         errors.push('It should not be empty');
     }
-    if (isEmoji(input)) {
+    if (regex.test(input)) {
         errors.push('It contains emoji');
     }
     if (input.length > 100) {

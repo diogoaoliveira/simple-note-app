@@ -9,8 +9,8 @@
         "lint": "eslint ./src/**/**.js",
         "lint:fix": "eslint ./src/**/**.js --fix",
         "test": "jest",
-        "test:watch": "npm run test --watch",
-        "test:cover": "npm run test --coverage"
+        "test:watch": "jest --watch",
+        "test:cover": "jest --coverage"
     },
     "keywords": [],
     "author": "Diogo Oliveira",
@@ -65,7 +65,8 @@
         "webpack-merge": "^4.2.1"
     },
     "dependencies": {
-        "cross-env": "^5.2.0",        
+        "cross-env": "^5.2.0",
+        "emoji-regex": "^7.0.3",
         "react": "^16.7.0",
         "react-dom": "^16.7.0",
         "react-pose": "^4.0.5",

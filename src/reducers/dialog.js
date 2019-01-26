@@ -1,6 +1,6 @@
 import { TOGGLE_DIALOG } from '../constants/actionTypes';
 
-const INITIAL_STATE = { showDialog: false };
+export const INITIAL_STATE = { showDialog: false };
 
 function dialogReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
