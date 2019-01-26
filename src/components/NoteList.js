@@ -48,7 +48,8 @@ NoteList.propTypes = {
         PropTypes.shape({
             title: PropTypes.string
         })
-    )
+    ),
+    deleteNote: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({

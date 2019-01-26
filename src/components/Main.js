@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 
@@ -19,6 +20,7 @@ const defaultTheme = {
     buttonColor: '#00cec9',
     confirmButtonColor: '#0984e3',
     deleteButtonColor: '#e17055',
+    errorMessageColor: '#d63031',
     blackColor: '#2d3436',
     maxWidth: '1000px'
 };
@@ -65,7 +67,7 @@ const AddNote = styled(Button)`
     outline: none;
 `;
 
-class Layout extends React.Component {
+class Main extends React.Component {
     state = { show: false };
 
     componentDidMount() {
@@ -100,6 +102,21 @@ class Layout extends React.Component {
     }
 }
 
+Main.propTypes = {
+    toggleDialog: PropTypes.func.isRequired,
+    showDialog: PropTypes.bool.isRequired,
+    notesRemaining: PropTypes.bool.isRequired,
+    notes: PropTypes.arrayOf(
+        PropTypes.shape({
+            title: PropTypes.string
+        })
+    )
+};
+
+Main.defaultProps = {
+    notes: []
+};
+
 const mapStateToProps = state => ({
     showDialog: state.dialog.showDialog,
     notes: getAllNotesMainPage(state),
@@ -113,4 +130,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Layout);
+)(Main);

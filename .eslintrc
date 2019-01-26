@@ -29,6 +29,7 @@
         "global-require": "off",
         "semi": "warn",
         "arrow-body-style": "off",
+        "no-shadow": "off",
         "no-multiple-empty-lines": ["warn", { "max": 1 }],
         "no-unused-expressions": [
             "error",

@@ -11,8 +11,8 @@ import {
 import { addNoteWithTimeout } from '../actions/notes';
 
 import NoteList from './NoteList';
-import { Button } from './AnimatedComponents';
 import NoItemsMessage from './NoItemsMessage';
+import NoteForm from './NoteForm';
 
 const Dialog = posed.div({
     enter: {
@@ -63,10 +63,6 @@ const Container = styled.div`
     justify-content: space-between;
 `;
 
-const FormContainer = styled.form`
-    display: flex;
-`;
-
 const ListContainer = styled.div`
     padding: 0 1rem 0 0;
     border-radius: 0.5rem;
@@ -74,62 +70,38 @@ const ListContainer = styled.div`
     overflow-y: scroll;
 `;
 
-const InputField = styled.input`
-    border: none;
-    height: 2.5rem;
-    width: 17rem;
-    margin: 0.5rem 0;
-    border-radius: 2rem;
-    padding: 0 1rem;
-    outline: none;
-`;
-
-const AddButton = styled(Button)`
-    margin: 0 10px;
-    border: none;
-    width: 3.7rem;
-    border-radius: 2rem;
-    color: white;
-    background-color: ${props => props.theme.confirmButtonColor};
-    outline: none;
-    cursor: pointer;
-`;
-
-const NoteDialog = ({ showDialog, notes, addNote, notesRemaining }) => {
-    const submitForm = e => {
-        e.preventDefault();
-        addNote({ title: e.target.note.value, id: e.target.note.value });
-    };
-
-    return (
-        <PoseGroup>
-            {showDialog && [
-                <DialogContainer key="dialog">
-                    <Container>
-                        <ListContainer>
-                            {notesRemaining ? (
-                                <NoteList notes={notes} />
-                            ) : (
-                                <NoItemsMessage />
-                            )}
-                        </ListContainer>
-                        <FormContainer onSubmit={submitForm} autoComplete="off">
-                            <InputField
-                                name="note"
-                                type="text"
-                                placeholder="e.g. Remember to like the repo!"
-                            />
-                            <AddButton type="submit">Add</AddButton>
-                        </FormContainer>
-                    </Container>
-                </DialogContainer>
-            ]}
-        </PoseGroup>
-    );
-};
+const NoteDialog = ({ showDialog, notes, notesRemaining, addNote }) => (
+    <PoseGroup>
+        {showDialog && [
+            <DialogContainer key="dialog">
+                <Container>
+                    <ListContainer>
+                        {notesRemaining ? (
+                            <NoteList notes={notes} />
+                        ) : (
+                            <NoItemsMessage />
+                        )}
+                    </ListContainer>
+                    <NoteForm addNote={addNote} />
+                </Container>
+            </DialogContainer>
+        ]}
+    </PoseGroup>
+);
 
 NoteDialog.propTypes = {
-    showDialog: PropTypes.bool.isRequired
+    showDialog: PropTypes.bool.isRequired,
+    notesRemaining: PropTypes.bool.isRequired,
+    notes: PropTypes.arrayOf(
+        PropTypes.shape({
+            title: PropTypes.string
+        })
+    ),
+    addNote: PropTypes.func.isRequired
+};
+
+NoteDialog.defaultProps = {
+    notes: []
 };
 
 const mapStateToProps = state => ({
